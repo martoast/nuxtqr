@@ -1,9 +1,6 @@
 <template>
   <client-only>
-    <vue-qr-reader
-      v-on:code-scanned="codeArrived"
-      v-on:error-captured="errorCaptured"
-    />
+    <vue-qr-reader v-on:code-scanned="codeArrived" v-on:error-captured="errorCaptured" />
   </client-only>
 </template>
 
@@ -18,7 +15,7 @@ export default {
   },
   methods: {
     codeArrived(event) {
-      console.log(event.detail[0]);
+      console.log(event);
     },
     errorCaptured(error) {
       switch (error.name) {
