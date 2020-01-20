@@ -16,6 +16,8 @@ export default {
   methods: {
     codeArrived(event) {
       console.log(event);
+      alert(event);
+      this.$store.commit("scannedQR", event);
     },
     errorCaptured(error) {
       switch (error.name) {

@@ -1,9 +1,9 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
-      <no-ssr>
+      <client-only>
         <reader></reader>
-      </no-ssr>
+      </client-only>
       <v-card></v-card>
     </v-flex>
   </v-layout>
