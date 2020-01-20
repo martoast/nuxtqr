@@ -8,7 +8,7 @@
 
         <v-card class="elevation-12">
           <v-toolbar color="secondary" dark>
-            <v-toolbar-title>Login</v-toolbar-title>
+            <v-toolbar-title>Register</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
             <v-form>

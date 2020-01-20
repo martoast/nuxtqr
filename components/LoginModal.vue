@@ -63,7 +63,7 @@ export default {
           alert(e);
         } finally {
           console.log("success");
-          // $nuxt._router.push("/");
+          $nuxt._router.push("/dashboard");
         }
       } else {
         //make button different color green
