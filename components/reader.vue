@@ -1,9 +1,6 @@
 <template>
   <client-only>
-    <vue-qr-reader
-      v-on:code-scanned="codeArrived"
-      v-on:error-captured="errorCaptured"
-    />
+    <vue-qr-reader v-on:code-scanned="codeArrived" v-on:error-captured="errorCaptured" />
   </client-only>
 </template>
 
@@ -23,10 +20,13 @@ export default {
   },
   methods: {
     codeArrived(event) {
-      this.event = event;
-      console.log(event);
-      // alert(event);
-      this.writeToFirestore(event);
+      const restaurantObject = { id: event, score: 0 };
+
+      let visited = [];
+      visited.push(restaurantObject);
+      console.log(visited);
+
+      this.writeToFirestore(visited);
       // this.$store.commit("scannedQR", event);
       // this.$store.dispatch("SCANNED", event);
     },
@@ -61,15 +61,15 @@ export default {
       vm.$fireAuth.onAuthStateChanged(async function(user) {
         if (user) {
           console.log(user.email);
-          let eventmsg = vm.event;
+
           const messageRef = vm.$fireStore.collection("users").doc(user.email);
           try {
-            await messageRef.set(
-              {
-                messege: eventmsg
-              },
-              { merge: true }
-            );
+            await messageRef.update({
+              visited: vm.$fireStoreObj.FieldValue.arrayUnion.apply(
+                null,
+                payload
+              )
+            });
           } catch (e) {
             alert(e);
             return;
