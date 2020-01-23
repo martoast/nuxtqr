@@ -20,15 +20,7 @@ export default {
   },
   methods: {
     codeArrived(event) {
-      const restaurantObject = { id: event, score: 0 };
-
-      let visited = [];
-      visited.push(restaurantObject);
-      console.log(visited);
-
-      this.writeToFirestore(visited);
-      // this.$store.commit("scannedQR", event);
-      // this.$store.dispatch("SCANNED", event);
+      this.writeToFirestore(event);
     },
 
     errorCaptured(error) {
@@ -60,20 +52,25 @@ export default {
 
       vm.$fireAuth.onAuthStateChanged(async function(user) {
         if (user) {
-          console.log(user.email);
+          let EMAIL = user.email;
+          const increment = vm.$fireStoreObj.FieldValue.increment(1);
+          const messageRef = vm.$fireStore.collection(EMAIL).doc(payload);
 
-          const messageRef = vm.$fireStore.collection("users").doc(user.email);
-          try {
-            await messageRef.update({
-              visited: vm.$fireStoreObj.FieldValue.arrayUnion.apply(
-                null,
-                payload
-              )
-            });
-          } catch (e) {
-            alert(e);
-            return;
+          if (messageRef) {
+            try {
+              const increment = vm.$fireStoreObj.FieldValue.increment(1);
+              await messageRef.update({
+                score: increment
+              });
+            } catch (e) {
+              await messageRef.set({
+                score: 1
+              });
+            }
+          } else {
+            console.log("error");
           }
+
           alert("Saved to Firebase");
         } else {
           alert("Must be signed in to perform action.");

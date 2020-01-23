@@ -28,3 +28,5 @@ id: "1345123461"
 score: 0
 
 }]
+
+so there is no way in firebase increment a single field value in an array
