@@ -2,11 +2,10 @@
   <div>
     <v-app>
       <v-app-bar app color="indigo">
-        <v-toolbar-title class="white--text">Eazy POS</v-toolbar-title>
+        <v-toolbar-title class="white--text">nuxt-QR</v-toolbar-title>
         <v-spacer></v-spacer>
 
         <v-toolbar-items>
-          <RegisterModal />
           <LoginModal />
         </v-toolbar-items>
       </v-app-bar>
@@ -21,11 +20,10 @@
 </template>
 <script>
 import LoginModal from "~/components/LoginModal";
-import RegisterModal from "~/components/RegisterModal";
+
 export default {
   components: {
-    LoginModal,
-    RegisterModal
+    LoginModal
   },
   data() {
     return {

@@ -23,6 +23,12 @@
                   </v-layout>
                 </v-col>
               </v-row>
+              <!-- <v-row justify="center">
+                <v-btn><RegisterModal /></v-btn>
+              </v-row> -->
+              <v-row justify="center">
+                <v-btn rounded color="primary" dark><RegisterModal /></v-btn>
+              </v-row>
             </v-parallax>
           </section>
 
@@ -190,8 +196,12 @@
 </template>
 
 <script>
+import RegisterModal from "~/components/RegisterModal";
 export default {
   layout: "landing",
+  components: {
+    RegisterModal
+  },
 
   data() {
     return {
