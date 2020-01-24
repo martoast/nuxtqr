@@ -60,12 +60,14 @@ export default {
             try {
               const increment = vm.$fireStoreObj.FieldValue.increment(1);
               await messageRef.update({
-                score: increment
+                score: increment,
+                id: payload
               });
             } catch (e) {
               await messageRef.set({
-                score: 1
-              });
+                score: 1,
+                id: payload
+              }, {merge: true});
             }
           } else {
             console.log("error");

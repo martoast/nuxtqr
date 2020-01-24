@@ -78,7 +78,8 @@ export default {
         artist: "Foster the People"
       }
     ],
-    visited: null
+    visited: null,
+    Restaurants: []
   }),
   created() {
     const vm = this;
@@ -89,8 +90,27 @@ export default {
         try {
           const messageRef = await vm.$fireStore.collection(EMAIL).get();
 
-          vm.visited = messageRef.docs.map(doc => doc.data());
-          console.log(vm.visited);
+          let visited = messageRef.docs.map(doc => doc.data());
+
+          for (const item in visited) {
+            console.log(visited[item].id);
+            // vm.Restaurants.push(vm.visited[item].id);
+            // console.log(vm.Restaurants);
+
+            const messageRef2 = await vm.$fireStore
+              .collection("merchants")
+              .where("id", "==", visited[item].id)
+              .get()
+              .then(function(querySnapshot) {
+                querySnapshot.forEach(function(doc) {
+                  // doc.data() is never undefined for query doc snapshots
+                  console.log(doc.id, " => ", doc.data());
+                });
+              })
+              .catch(function(error) {
+                console.log("Error getting documents: ", error);
+              });
+          }
         } catch (e) {
           alert(e);
           return;
