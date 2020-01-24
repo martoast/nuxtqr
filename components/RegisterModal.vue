@@ -3,7 +3,7 @@
     <v-row justify="center">
       <v-dialog v-model="dialog" max-width="450px">
         <template v-slot:activator="{ on }">
-          <v-btn text v-on="on" class="white--text">Register</v-btn>
+          <v-btn v-on="on">Register</v-btn>
         </template>
 
         <v-card class="elevation-12">
@@ -32,12 +32,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="secondary"
-              class="primary"
-              @click="createUser(email, password)"
-              >Login</v-btn
-            >
+            <v-btn color="secondary" class="primary" @click="createUser(email, password)">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>

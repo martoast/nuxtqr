@@ -4,18 +4,10 @@
       <v-app light>
         <v-content>
           <section>
-            <v-parallax
-              height="400"
-              src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg"
-            >
+            <v-parallax height="400" src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg">
               <v-row justify="center" align="center">
                 <v-col>
-                  <v-layout
-                    column
-                    align-center
-                    justify-center
-                    class="white--text"
-                  >
+                  <v-layout column align-center justify-center class="white--text">
                     <div class="white--text mb-2 display-1 text-center">
                       Un Sistema Diseñado Para Los Restaurantes Mas Innovadores
                       de México
@@ -23,11 +15,8 @@
                   </v-layout>
                 </v-col>
               </v-row>
-              <!-- <v-row justify="center">
-                <v-btn><RegisterModal /></v-btn>
-              </v-row> -->
               <v-row justify="center">
-                <v-btn rounded color="primary" dark><RegisterModal /></v-btn>
+                <RegisterModal />
               </v-row>
             </v-parallax>
           </section>
@@ -36,15 +25,13 @@
             <v-layout column wrap class="my-12" align-center>
               <v-flex xs12 sm4 class="my-4">
                 <div class="text-center">
-                  <h2 class="headline">
-                    Facilita las operaciones de tu restaurante.
-                  </h2>
+                  <h2 class="headline">Facilita las operaciones de tu restaurante.</h2>
                   <span class="subheading">
                     EazyPOS esta diseñado para facilitar y mejorar las
                     operaciones de tu negocio; Al mismo tiempo nos adaptamos a
                     tus valores para tener una mayor connecion con tu empresa.
                     <!-- te da más tiempo para
-                    enfocarte en la razón que te motivó a abrir tu restaurante. -->
+                    enfocarte en la razón que te motivó a abrir tu restaurante.-->
                   </span>
                 </div>
               </v-flex>
@@ -54,17 +41,10 @@
                     <v-flex xs12 md4>
                       <v-card flat class="transparent">
                         <v-card-text class="text-center">
-                          <v-icon x-large class="blue--text text--lighten-2"
-                            >mdi-food</v-icon
-                          >
+                          <v-icon x-large class="blue--text text--lighten-2">mdi-food</v-icon>
                         </v-card-text>
-                        <v-card-title
-                          primary-title
-                          class="layout justify-center"
-                        >
-                          <div class="headline text-center">
-                            Administra tu menú
-                          </div>
+                        <v-card-title primary-title class="layout justify-center">
+                          <div class="headline text-center">Administra tu menú</div>
                         </v-card-title>
                         <v-card-text>
                           Personaliza tus menús y explota los modificadores para
@@ -77,14 +57,9 @@
                     <v-flex xs12 md4>
                       <v-card flat class="transparent">
                         <v-card-text class="text-center">
-                          <v-icon x-large class="blue--text text--lighten-2"
-                            >mdi-flash</v-icon
-                          >
+                          <v-icon x-large class="blue--text text--lighten-2">mdi-flash</v-icon>
                         </v-card-text>
-                        <v-card-title
-                          primary-title
-                          class="layout justify-center"
-                        >
+                        <v-card-title primary-title class="layout justify-center">
                           <div class="headline">Acelera las compras</div>
                         </v-card-title>
                         <v-card-text>
@@ -97,17 +72,10 @@
                     <v-flex xs12 md4>
                       <v-card flat class="transparent">
                         <v-card-text class="text-center">
-                          <v-icon x-large class="blue--text text--lighten-2"
-                            >mdi-wrench</v-icon
-                          >
+                          <v-icon x-large class="blue--text text--lighten-2">mdi-wrench</v-icon>
                         </v-card-text>
-                        <v-card-title
-                          primary-title
-                          class="layout justify-center"
-                        >
-                          <div class="headline text-center">
-                            Analíticos en tiempo real
-                          </div>
+                        <v-card-title primary-title class="layout justify-center">
+                          <div class="headline text-center">Analíticos en tiempo real</div>
                         </v-card-title>
                         <v-card-text>
                           Vea qué ventas se han realizado desde cualquier lugar
@@ -128,9 +96,7 @@
               <v-flex xs12 sm4>
                 <v-card flat class="transparent">
                   <v-card-title primary-title class="layout justify-center">
-                    <div class="headline">
-                      Información General
-                    </div>
+                    <div class="headline">Información General</div>
                   </v-card-title>
                   <v-card-text>
                     Somos una empresa que cree que es hora de que las soluciones
@@ -154,9 +120,7 @@
                   <v-list class="transparent">
                     <v-list-item>
                       <v-list-item-action>
-                        <v-icon class="blue--text text--lighten-2"
-                          >mdi-phone</v-icon
-                        >
+                        <v-icon class="blue--text text--lighten-2">mdi-phone</v-icon>
                       </v-list-item-action>
                       <v-list-item-content>
                         <v-list-item-title>619-888-5248</v-list-item-title>
@@ -164,9 +128,7 @@
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-action>
-                        <v-icon class="blue--text text--lighten-2"
-                          >mdi-map-marker</v-icon
-                        >
+                        <v-icon class="blue--text text--lighten-2">mdi-map-marker</v-icon>
                       </v-list-item-action>
                       <v-list-item-content>
                         <v-list-item-title>Tijuana, MX</v-list-item-title>
@@ -174,14 +136,10 @@
                     </v-list-item>
                     <v-list-item>
                       <v-list-item-action>
-                        <v-icon class="blue--text text--lighten-2"
-                          >mdi-email</v-icon
-                        >
+                        <v-icon class="blue--text text--lighten-2">mdi-email</v-icon>
                       </v-list-item-action>
                       <v-list-item-content>
-                        <v-list-item-title
-                          >alexmartos96@gmail.com</v-list-item-title
-                        >
+                        <v-list-item-title>alexmartos96@gmail.com</v-list-item-title>
                       </v-list-item-content>
                     </v-list-item>
                   </v-list>
