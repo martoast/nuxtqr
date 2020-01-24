@@ -1,7 +1,12 @@
 <template>
-  <client-only>
-    <vue-qr-reader v-on:code-scanned="codeArrived" v-on:error-captured="errorCaptured" />
-  </client-only>
+  <div>
+    <client-only>
+      <vue-qr-reader
+        v-on:code-scanned="codeArrived"
+        v-on:error-captured="errorCaptured"
+      />
+    </client-only>
+  </div>
 </template>
 
 <script>
@@ -64,10 +69,13 @@ export default {
                 id: payload
               });
             } catch (e) {
-              await messageRef.set({
-                score: 1,
-                id: payload
-              }, {merge: true});
+              await messageRef.set(
+                {
+                  score: 1,
+                  id: payload
+                },
+                { merge: true }
+              );
             }
           } else {
             console.log("error");
@@ -82,3 +90,17 @@ export default {
   }
 };
 </script>
+<style scoped>
+.fullscreen {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: black;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+}
+</style>
