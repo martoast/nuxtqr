@@ -4,10 +4,6 @@
       <v-app-bar app color="indigo">
         <v-toolbar-title class="white--text">nuxt-QR</v-toolbar-title>
         <v-spacer></v-spacer>
-
-        <v-toolbar-items>
-          <LoginModal />
-        </v-toolbar-items>
       </v-app-bar>
 
       <Nuxt />
@@ -19,12 +15,7 @@
   </div>
 </template>
 <script>
-import LoginModal from "~/components/LoginModal";
-
 export default {
-  components: {
-    LoginModal
-  },
   data() {
     return {
       dialog: false
