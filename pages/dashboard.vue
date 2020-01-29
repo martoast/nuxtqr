@@ -49,14 +49,14 @@
             <v-container v-if="Discounts.length > 0">
               <v-row dense>
                 <v-col v-for="(discount, i) in this.Discounts" :key="i" cols="12">
-                  <v-card>
+                  <v-card v-if="VisitedScore >= discount.cost">
                     <div class="d-flex flex-no-wrap justify-space-between">
                       <div>
                         <v-card-title class="headline" v-text="discount.title"></v-card-title>
                         <v-card-subtitle>{{discount.description}}</v-card-subtitle>
                       </div>
                       <v-avatar class="ma-3" size="125" tile>
-                        <h3>{{discount.cost}}</h3>
+                        <h3>{{discount.cost}} pts</h3>
                       </v-avatar>
                     </div>
                   </v-card>
