@@ -4,78 +4,81 @@
       <v-row>
         <v-dialog v-model="dialog2" persistent max-width="600px">
           <template v-slot:activator="{ on }">
-            <v-btn v-on="on">Add Menu Item</v-btn>
+            <v-btn v-on="on">Create Discount</v-btn>
           </template>
           <v-form v-model="valid" lazy-validation>
             <v-card>
               <v-card-title>
-                <span class="headline">Create Menu Item</span>
+                <span class="headline">Create Discount</span>
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-row justify="center">
-                    <v-col cols="12" sm="6" md="4">
+                  <v-row
+                    ><v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="Item name*"
-                        v-model="ItemName"
+                        v-model="DiscountTitle"
                         :rules="nameRules"
                         color="secondary"
                         required
                       ></v-text-field>
-                      <v-col cols="12" sm="6">
-                        <v-select :items="['0-17', '18-29', '30-54', '54+']" label="Age*" required></v-select>
-                      </v-col>
                     </v-col>
-
-                    <v-col cols="12" sm="6">
+                    <v-col cols="12" sm="6" md="4">
                       <v-select
-                        :items="['Food', 'Drink', 'Dessert']"
-                        label="Type*"
-                        v-model="ItemType"
+                        :items="[
+                          1,
+                          2,
+                          3,
+                          4,
+                          5,
+                          6,
+                          7,
+                          8,
+                          9,
+                          10,
+                          11,
+                          12,
+                          13,
+                          14,
+                          15
+                        ]"
+                        label="Point Cost*"
+                        v-model="DiscountCost"
                         required
                       ></v-select>
-                      <v-select
-                        v-model="SelectedSizes"
-                        :items="['Small', 'Medium', 'Large', 'Half', 'Full']"
-                        :rules="sizeRules"
-                        required
-                        chips
-                        label="Sizes"
-                        multiple
-                      ></v-select>
                     </v-col>
-                    <v-col cols="12" sm="6"></v-col>
                   </v-row>
+
+                  <v-textarea
+                    filled
+                    auto-grow
+                    label="Describe the Discount"
+                    rows="4"
+                    row-height="30"
+                    shaped
+                    v-model="DiscountDescription"
+                  ></v-textarea>
                 </v-container>
-                <v-card class="mx-auto" max-width="300" tile v-if="this.ModifiersList.length > 0">
-                  <v-list rounded>
-                    <v-subheader>
-                      <v-row justify="center" align="center">
-                        <v-card-text>Item Modifiers</v-card-text>
-                      </v-row>
-                    </v-subheader>
-                    <v-list-item-group color="primary">
-                      <v-list-item v-for="(item, i) in ModifiersList" :key="i">
-                        <v-list-item-content>
-                          <v-list-item-title v-text="item.name"></v-list-item-title>
-                        </v-list-item-content>
-                        <h5>${{item.price}}</h5>
-                        <v-icon color="pink" @click="DeleteModifier(item,i)">mdi-delete</v-icon>
-                      </v-list-item>
-                    </v-list-item-group>
-                  </v-list>
-                </v-card>
 
                 <small>*indicates required field</small>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog2 = false">Close</v-btn>
+                <v-btn color="blue darken-1" text @click="dialog2 = false"
+                  >Close</v-btn
+                >
                 <v-btn
-                  v-if="valid && this.ItemName && this.ItemPrice && this.ItemType != null || false"
+                  v-if="
+                    (valid &&
+                      this.DiscountTitle &&
+                      this.DiscountDescription &&
+                      this.DiscountCost != null) ||
+                      false
+                  "
                   color="secondary"
-                  @click="SaveItem()"
-                >Save</v-btn>
+                  @click="SaveDiscount()"
+                  >Save</v-btn
+                >
               </v-card-actions>
             </v-card>
           </v-form>
@@ -90,14 +93,7 @@ export default {
     return {
       dialog2: false,
       dialog3: false,
-      ModifierName: null,
-      ModifierPrice: null,
-      ItemName: null,
-      ItemType: null,
-      ItemPrice: null,
-      ModifiersList: [],
-      email: null,
-      uid: {},
+
       nameRules: [v => !!v || "Name is required"],
 
       priceRules: [
@@ -108,60 +104,96 @@ export default {
       loading: false,
       valid: true,
       valid2: true,
+      DiscountCost: null,
+      DiscountDescription: null,
+      DiscountTitle: null,
+      DiscountType: null,
 
       SelectedSizes: []
     };
   },
   methods: {
-    SaveModifier() {
-      this.dialog3 = false;
-      this.ModifiersList = this.ModifiersList || [];
-      var name = this.ModifierName;
-      var price = this.ModifierPrice;
-      let modifierID = Math.random()
-        .toString(36)
-        .substr(2, 9);
-      let modifier = {
-        name,
-        price,
-        modifierID
-      };
-
-      this.ModifiersList.push(modifier);
-      console.log(this.ModifiersList);
-      this.ModifierName = null;
-      this.ModifierPrice = null;
-    },
-    DeleteModifier(item) {
-      this.ModifiersList.splice(item, 1);
-      console.log("Modifier Deleted");
-    },
-    SaveItem() {
+    SaveDiscount() {
       this.dialog2 = false;
-      var name = this.ItemName;
-      var price = this.ItemPrice;
-      var type = this.ItemType;
-      let modifiers = this.ModifiersList;
-      let sizes = this.SelectedSizes;
+      var title = this.DiscountTitle;
+      var cost = this.DiscountCost;
+      var type = this.DiscountType;
+      var description = this.DiscountDescription;
 
       let id = Math.random()
         .toString(36)
         .substr(2, 9);
-      let item = {
+      let discount = {
         id,
+        title,
         type,
-        name,
-        price,
-        modifiers,
-        sizes
+        cost,
+        description
       };
-      this.$store.commit("merchant/add", item);
+      const vm = this;
+
+      // vm.$fireAuth.onAuthStateChanged(async function(user) {
+      //   if (user) {
+      //     const messageRef = vm.$fireStore
+      //       .collection("merchants")
+      //       .doc(user.email);
+      //     try {
+      //       await messageRef.set({
+      //         message: "Nuxt-Fire with Firestore rocks!"
+      //       });
+      //     } catch (e) {
+      //       alert(e);
+      //       return;
+      //     }
+      //     alert("Success.");
+      //   }
+      // });
+      this.$store.commit("merchant/add", discount);
       // Reset values
-      this.ItemName = "";
-      this.ItemPrice = "";
-      this.ModifiersList = [];
-      this.ItemType = "";
-      this.SelectedSizes = [];
+      this.DiscountTitle = null;
+      this.DiscountCost = null;
+      this.DiscountType = null;
+    },
+    decrement() {
+      this.DiscountCost--;
+    },
+    increment() {
+      this.DiscountCost++;
+    },
+    async writeToFirestore(payload) {
+      const vm = this;
+
+      vm.$fireAuth.onAuthStateChanged(async function(user) {
+        if (user) {
+          let EMAIL = user.email;
+          const increment = vm.$fireStoreObj.FieldValue.increment(1);
+          const messageRef = vm.$fireStore.collection(EMAIL).doc(payload);
+
+          if (messageRef) {
+            try {
+              const increment = vm.$fireStoreObj.FieldValue.increment(1);
+              await messageRef.update({
+                score: increment,
+                id: payload
+              });
+            } catch (e) {
+              await messageRef.set(
+                {
+                  score: 1,
+                  id: payload
+                },
+                { merge: true }
+              );
+            }
+          } else {
+            console.log("error");
+          }
+
+          alert("Saved to Firebase");
+        } else {
+          alert("Must be signed in to perform action.");
+        }
+      });
     }
   }
 };
