@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>{{ todos }}</h1>
     <v-card min-width="400" class="mx-auto">
       <v-container>
         <v-row dense>
@@ -15,10 +14,7 @@
               >
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
-                    <v-card-title
-                      class="headline"
-                      v-text="item.title"
-                    ></v-card-title>
+                    <v-card-title class="headline" v-text="item.title"></v-card-title>
                   </div>
 
                   <v-avatar class="ma-3" size="125" tile>
@@ -42,31 +38,26 @@
                 :width="15"
                 :value="value"
                 color="teal"
-              >
-                {{ VisitedScore }}
-              </v-progress-circular>
+              >{{ VisitedScore }}</v-progress-circular>
             </div>
-            <v-row justify="center"
-              ><v-card-title>
+            <v-row justify="center">
+              <v-card-title>
                 <span class="headline">{{ this.VisitedTitle }}</span>
-              </v-card-title></v-row
-            >
+              </v-card-title>
+            </v-row>
 
-            <v-container>
+            <v-container v-if="Discounts.length > 0">
               <v-row dense>
-                <v-col v-for="(item, i) in items" :key="i" cols="12">
-                  <v-card :color="item.color" dark>
+                <v-col v-for="(discount, i) in this.Discounts" :key="i" cols="12">
+                  <v-card>
                     <div class="d-flex flex-no-wrap justify-space-between">
                       <div>
-                        <v-card-title
-                          class="headline"
-                          v-text="item.title"
-                        ></v-card-title>
-                        <v-card-subtitle
-                          >Listen to your favorite artists and albums whenever
-                          and wherever, online and offline.</v-card-subtitle
-                        >
+                        <v-card-title class="headline" v-text="discount.title"></v-card-title>
+                        <v-card-subtitle>{{discount.description}}</v-card-subtitle>
                       </div>
+                      <v-avatar class="ma-3" size="125" tile>
+                        <h3>{{discount.cost}}</h3>
+                      </v-avatar>
                     </div>
                   </v-card>
                 </v-col>
@@ -109,7 +100,8 @@ export default {
     VisitedScore: null,
     interval: {},
     value: 0,
-    email: null
+    email: null,
+    Discounts: []
   }),
   beforeDestroy() {
     clearInterval(this.interval);
@@ -190,6 +182,24 @@ export default {
         const messageDoc = await messageRef.get();
 
         vm.VisitedScore = messageDoc.data().score;
+
+        const messageRef2 = await vm.$fireStore
+          .collection("merchants")
+
+          .where("id", "==", item.id)
+          .get()
+          .then(function(querySnapshot) {
+            querySnapshot.forEach(function(doc) {
+              // doc.data() is never undefined for query doc snapshots
+              // console.log(doc.id, " => ", doc.data());
+              let data = doc.data().discounts;
+              vm.Discounts = data;
+              console.log(vm.Discounts);
+            });
+          })
+          .catch(function(error) {
+            console.log("Error getting documents: ", error);
+          });
       } catch (e) {
         alert(e);
         return;
