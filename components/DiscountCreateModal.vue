@@ -147,7 +147,7 @@ export default {
       // Reset values
       this.DiscountTitle = null;
       this.DiscountCost = null;
-      this.DiscountType = null;
+      this.DiscountDescription = null;
     },
     decrement() {
       this.DiscountCost--;

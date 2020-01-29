@@ -155,42 +155,6 @@ export default {
     DeleteItem(item) {
       console.log("deleting item...");
       this.$store.commit("merchant/remove", item);
-    },
-    DeleteModifier(item) {
-      console.log(item);
-      console.log("Modifier Deleted");
-    },
-    SaveEdit() {
-      this.dialog = false;
-      let name = this.ItemName;
-      let price = this.ItemPrice;
-      let type = this.ItemType;
-      let modifiers = this.ModifiersList;
-      let sizes = this.SelectedSizes;
-      let id = this.id;
-
-      let itemID = Math.random()
-        .toString(36)
-        .substr(2, 9);
-      let item = {
-        itemID,
-        type,
-        name,
-        price,
-        modifiers,
-        sizes
-      };
-      this.$store.commit("menu/edit", item);
-    },
-    EditItem(item) {
-      console.log(item);
-      this.dialog4 = true;
-      this.ItemName = item.name;
-      this.ItemPrice = item.price;
-      this.ItemType = item.type;
-      this.ModifiersList = item.modifiers;
-      this.ItemSize = item.sizes;
-      // this.$store.getters["menu/getItem"];
     }
   }
 };

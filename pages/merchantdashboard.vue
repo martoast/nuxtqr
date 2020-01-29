@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-card>
-      <v-card-title>Menu Configuration</v-card-title>
+      <v-card-title>Discount Configuration</v-card-title>
       <v-spacer></v-spacer>
 
       <DiscountTable :DiscountItems="DiscountItems" />
