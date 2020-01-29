@@ -13,8 +13,8 @@
               </v-card-title>
               <v-card-text>
                 <v-container>
-                  <v-row
-                    ><v-col cols="12" sm="6" md="4">
+                  <v-row>
+                    <v-col cols="12" sm="6" md="4">
                       <v-text-field
                         label="Item name*"
                         v-model="DiscountTitle"
@@ -64,9 +64,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue darken-1" text @click="dialog2 = false"
-                  >Close</v-btn
-                >
+                <v-btn color="blue darken-1" text @click="dialog2 = false">Close</v-btn>
                 <v-btn
                   v-if="
                     (valid &&
@@ -77,8 +75,7 @@
                   "
                   color="secondary"
                   @click="SaveDiscount()"
-                  >Save</v-btn
-                >
+                >Save</v-btn>
               </v-card-actions>
             </v-card>
           </v-form>
@@ -107,7 +104,6 @@ export default {
       DiscountCost: null,
       DiscountDescription: null,
       DiscountTitle: null,
-      DiscountType: null,
 
       SelectedSizes: []
     };
@@ -117,7 +113,7 @@ export default {
       this.dialog2 = false;
       var title = this.DiscountTitle;
       var cost = this.DiscountCost;
-      var type = this.DiscountType;
+
       var description = this.DiscountDescription;
 
       let id = Math.random()
@@ -126,7 +122,6 @@ export default {
       let discount = {
         id,
         title,
-        type,
         cost,
         description
       };
@@ -159,41 +154,6 @@ export default {
     },
     increment() {
       this.DiscountCost++;
-    },
-    async writeToFirestore(payload) {
-      const vm = this;
-
-      vm.$fireAuth.onAuthStateChanged(async function(user) {
-        if (user) {
-          let EMAIL = user.email;
-          const increment = vm.$fireStoreObj.FieldValue.increment(1);
-          const messageRef = vm.$fireStore.collection(EMAIL).doc(payload);
-
-          if (messageRef) {
-            try {
-              const increment = vm.$fireStoreObj.FieldValue.increment(1);
-              await messageRef.update({
-                score: increment,
-                id: payload
-              });
-            } catch (e) {
-              await messageRef.set(
-                {
-                  score: 1,
-                  id: payload
-                },
-                { merge: true }
-              );
-            }
-          } else {
-            console.log("error");
-          }
-
-          alert("Saved to Firebase");
-        } else {
-          alert("Must be signed in to perform action.");
-        }
-      });
     }
   }
 };

@@ -42,9 +42,13 @@ export default {
             .get()
             .then(function(doc) {
               if (doc.exists) {
-                console.log(doc.data().discounts);
-                let Discounts = doc.data().discounts;
-                vm.$store.commit("merchant/setMenu", Discounts);
+                if (doc.data().discounts) {
+                  console.log(doc.data().discounts);
+                  let Discounts = doc.data().discounts;
+                  vm.$store.commit("merchant/setMenu", Discounts);
+                } else {
+                  console.log("no Discounts have been created!");
+                }
               } else {
                 // doc.data() will be undefined in this case
                 console.log("No Discounts has been created!");

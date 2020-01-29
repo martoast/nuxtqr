@@ -18,15 +18,11 @@
                 </v-list-item-content>
               </v-list-item>
             </td>
-            <td>$ {{ item.cost }}</td>
-            <td>{{item.discount}}</td>
+            <td>{{ item.cost }}pts</td>
+            <td>{{item.description}}</td>
             <td>
               <div>
                 <v-row>
-                  <v-btn color="secondary" @click="EditItem(item)" fab x-small dark>
-                    <v-icon>mdi-pencil</v-icon>
-                  </v-btn>
-
                   <v-btn @click="DeleteItem(item)" color="secondary" fab x-small dark>
                     <v-icon>mdi-delete</v-icon>
                   </v-btn>
