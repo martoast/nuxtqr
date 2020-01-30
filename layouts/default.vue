@@ -50,7 +50,7 @@ export default {
           to: "/dashboard"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-camera",
           title: "Camera",
           to: "/readerPage"
         }

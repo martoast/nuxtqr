@@ -244,7 +244,7 @@ export default {
             console.log("error");
           }
 
-          alert("Points spent.");
+          $nuxt._router.push("/dashboard");
         } else {
           alert("Must be signed in to perform action.");
         }
