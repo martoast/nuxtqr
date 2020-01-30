@@ -54,11 +54,12 @@ export default {
       if (email && password) {
         try {
           await this.$fireAuth.signInWithEmailAndPassword(email, password);
+          $nuxt._router.push("/dashboard");
         } catch (e) {
           alert(e);
         } finally {
           console.log("success");
-          $nuxt._router.push("/dashboard");
+
         }
       } else {
         //make button different color green
