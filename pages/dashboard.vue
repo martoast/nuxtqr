@@ -49,7 +49,7 @@
             <v-container v-if="Discounts.length > 0">
               <v-row dense>
                 <v-col v-for="(discount, i) in this.Discounts" :key="i" cols="12">
-                  <v-card v-if="VisitedScore >= discount.cost">
+                  <v-card v-if="VisitedScore >= discount.cost" @click="OpenDiscount(discount)">
                     <div class="d-flex flex-no-wrap justify-space-between">
                       <div>
                         <v-card-title class="headline" v-text="discount.title"></v-card-title>
@@ -67,41 +67,40 @@
         </v-dialog>
       </v-row>
     </div>
+    <div>
+      <v-row justify="center">
+        <v-dialog v-model="dialog2" persistent max-width="290">
+          <v-card>
+            <v-card-title
+              class="headline"
+            >Are you sure you want spend {{ this.DiscountCost }} points?</v-card-title>
+            <v-card-text>You will not be able to refund this purchase.</v-card-text>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
+              <v-btn color="green darken-1" text @click="SpendPoints()">Agree</v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
   </div>
 </template>
 <script>
 export default {
   data: () => ({
-    items: [
-      {
-        color: "#385F73",
-        src:
-          "http://www.artitudesdesign.com/wp-content/uploads/2017/02/starbucks_featured_image-1.jpg",
-        title: "shti",
-        artist: "Foster the People"
-      },
-      {
-        color: "#385F73",
-        src: "https://cdn.vuetifyjs.com/images/cards/halcyon.png",
-        title: "Halcyon Days",
-        artist: "Ellie Goulding"
-      },
-      {
-        color: "#385F73",
-        src: "https://cdn.vuetifyjs.com/images/cards/foster.jpg",
-        title: "Supermodel",
-        artist: "Foster the People"
-      }
-    ],
     visited: null,
     Restaurants: [],
     dialog: false,
+    dialog2: false,
     VisitedTitle: null,
     VisitedScore: null,
     interval: {},
     value: 0,
     email: null,
-    Discounts: []
+    Discounts: [],
+    DiscountCost: null,
+    RestaurantID: null
   }),
   beforeDestroy() {
     clearInterval(this.interval);
@@ -176,6 +175,7 @@ export default {
     },
     async OpenModal(item) {
       const vm = this;
+      vm.RestaurantID = item.id;
       const messageRef = vm.$fireStore.collection(vm.email).doc(item.id);
 
       try {
@@ -207,6 +207,48 @@ export default {
 
       this.VisitedTitle = item.title;
       this.dialog = true;
+    },
+    OpenDiscount(discount) {
+      this.DiscountCost = discount.cost;
+      this.dialog2 = true;
+    },
+    async SpendPoints() {
+      // console.log(this.RestaurantID);
+      // console.log(this.DiscountCost - 1);
+
+      const vm = this;
+
+      vm.$fireAuth.onAuthStateChanged(async function(user) {
+        if (user) {
+          let EMAIL = user.email;
+
+          const messageRef = vm.$fireStore
+            .collection(EMAIL)
+            .doc(vm.RestaurantID);
+
+          if (messageRef) {
+            try {
+              const decrement = vm.$fireStoreObj.FieldValue.increment(
+                -vm.DiscountCost
+              );
+              await messageRef.update({
+                score: decrement,
+                id: vm.RestaurantID
+              });
+            } catch (e) {
+              console.log(e);
+            } finally {
+              vm.dialog2 = false;
+            }
+          } else {
+            console.log("error");
+          }
+
+          alert("Points spent.");
+        } else {
+          alert("Must be signed in to perform action.");
+        }
+      });
     }
   }
 };
