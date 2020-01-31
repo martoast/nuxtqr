@@ -57,25 +57,29 @@
                   :key="i"
                   cols="12"
                 >
-                  <v-card
-                    v-if="VisitedScore >= discount.cost"
-                    @click="OpenDiscount(discount)"
-                  >
-                    <div class="d-flex flex-no-wrap justify-space-between">
-                      <div>
-                        <v-card-title
-                          class="headline"
-                          v-text="discount.title"
-                        ></v-card-title>
-                        <v-card-subtitle>{{
-                          discount.description
-                        }}</v-card-subtitle>
+                  <v-hover v-slot:default="{ hover }">
+                    <v-card
+                      v-if="VisitedScore >= discount.cost"
+                      @click="OpenDiscount(discount)"
+                      :elevation="hover ? 24 : 2"
+                      :class="{ 'on-hover': hover }"
+                    >
+                      <div class="d-flex flex-no-wrap justify-space-between">
+                        <div>
+                          <v-card-title
+                            class="headline"
+                            v-text="discount.title"
+                          ></v-card-title>
+                          <v-card-subtitle>{{
+                            discount.description
+                          }}</v-card-subtitle>
+                        </div>
+                        <v-avatar class="ma-3" size="125" tile>
+                          <h3>{{ discount.cost }} pts</h3>
+                        </v-avatar>
                       </div>
-                      <v-avatar class="ma-3" size="125" tile>
-                        <h3>{{ discount.cost }} pts</h3>
-                      </v-avatar>
-                    </div>
-                  </v-card>
+                    </v-card>
+                  </v-hover>
                 </v-col>
               </v-row>
             </v-container>
@@ -111,8 +115,11 @@
       <v-row justify="center">
         <v-dialog v-model="dialog3" max-width="290">
           <v-card>
+            <v-card-title
+              >Screen shot this code and present at the register.</v-card-title
+            >
             <v-row justify="center"
-              ><qriously value="Hello World!" :size="200"
+              ><qriously value="Hello World!" :size="200" background="white"
             /></v-row>
           </v-card>
         </v-dialog>
@@ -121,11 +128,7 @@
   </div>
 </template>
 <script>
-// import VueQriously from "vue-qriously";
 export default {
-  // components: {
-  //   VueQriously
-  // },
   data: () => ({
     visited: null,
     Restaurants: [],
@@ -139,7 +142,9 @@ export default {
     email: null,
     Discounts: [],
     DiscountCost: null,
-    RestaurantID: null
+    RestaurantID: null,
+    MerchantEmail: null,
+    ID: []
   }),
   beforeDestroy() {
     clearInterval(this.interval);
@@ -232,7 +237,9 @@ export default {
               // doc.data() is never undefined for query doc snapshots
               // console.log(doc.id, " => ", doc.data());
               let data = doc.data().discounts;
+              let merchemail = doc.data().email;
               vm.Discounts = data;
+              vm.MerchantEmail = merchemail;
               console.log(vm.Discounts);
             });
           })
@@ -278,6 +285,28 @@ export default {
               console.log(e);
             } finally {
               vm.dialog2 = false;
+              let id = Math.random()
+                .toString(36)
+                .substr(2, 9);
+              vm.ID.push(id);
+
+              const messageRef2 = vm.$fireStore
+                .collection("merchants")
+                .doc(vm.MerchantEmail);
+
+              try {
+                await messageRef2.update({
+                  codes: vm.$fireStoreObj.FieldValue.arrayUnion.apply(
+                    null,
+                    vm.ID
+                  )
+                });
+              } catch (e) {
+                alert(e);
+                return;
+              }
+              alert("Success.");
+
               vm.dialog3 = true;
             }
           } else {
