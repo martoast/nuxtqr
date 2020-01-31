@@ -292,6 +292,7 @@ export default {
               const messageRef = vm.$fireStore.collection("codes").doc(id);
               try {
                 await messageRef.set({
+                  merchantId: vm.RestaurantID,
                   email: EMAIL,
                   time: new Date().toLocaleString()
                 });
@@ -306,8 +307,6 @@ export default {
           } else {
             console.log("error");
           }
-
-          // $nuxt._router.push("/dashboard");
         } else {
           alert("Must be signed in to perform action.");
         }
