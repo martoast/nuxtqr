@@ -62,10 +62,11 @@ export default {
 
               .where("couponID", "==", payload)
               .get()
-              .then(function(doc) {
+              .then(async function(doc) {
                 if (doc.exists) {
                   console.log("Document data:", doc.data());
                   alert("Coupon Valid.");
+                  await doc.delete();
                 } else {
                   // doc.data() will be undefined in this case
                   console.log("No such document!");
