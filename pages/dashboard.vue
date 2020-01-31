@@ -288,18 +288,12 @@ export default {
               let id = Math.random()
                 .toString(36)
                 .substr(2, 9);
-              vm.ID.push(id);
 
-              const messageRef2 = vm.$fireStore
-                .collection("merchants")
-                .doc(vm.MerchantEmail);
-
+              const messageRef = vm.$fireStore.collection("codes").doc(id);
               try {
-                await messageRef2.update({
-                  codes: vm.$fireStoreObj.FieldValue.arrayUnion.apply(
-                    null,
-                    vm.ID
-                  )
+                await messageRef.set({
+                  email: EMAIL,
+                  time: new Date().toLocaleString()
                 });
               } catch (e) {
                 alert(e);
@@ -313,7 +307,7 @@ export default {
             console.log("error");
           }
 
-          $nuxt._router.push("/dashboard");
+          // $nuxt._router.push("/dashboard");
         } else {
           alert("Must be signed in to perform action.");
         }
