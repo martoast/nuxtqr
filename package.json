@@ -15,7 +15,8 @@
     "nuxt": "^2.0.0",
     "nuxt-fire": "^3.5.5",
     "vue-no-ssr": "^1.1.1",
-    "vue-qr-reader": "^1.6.2"
+    "vue-qr-reader": "^1.6.2",
+    "vue-qriously": "^1.1.1"
   },
   "devDependencies": {
     "@nuxtjs/vuetify": "^1.0.0"

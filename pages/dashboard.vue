@@ -14,7 +14,10 @@
               >
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
-                    <v-card-title class="headline" v-text="item.title"></v-card-title>
+                    <v-card-title
+                      class="headline"
+                      v-text="item.title"
+                    ></v-card-title>
                   </div>
 
                   <v-avatar class="ma-3" size="125" tile>
@@ -38,7 +41,8 @@
                 :width="15"
                 :value="value"
                 color="teal"
-              >{{ VisitedScore }}</v-progress-circular>
+                >{{ VisitedScore }}</v-progress-circular
+              >
             </div>
             <v-row justify="center">
               <v-card-title>
@@ -48,15 +52,27 @@
 
             <v-container v-if="Discounts.length > 0">
               <v-row dense>
-                <v-col v-for="(discount, i) in this.Discounts" :key="i" cols="12">
-                  <v-card v-if="VisitedScore >= discount.cost" @click="OpenDiscount(discount)">
+                <v-col
+                  v-for="(discount, i) in this.Discounts"
+                  :key="i"
+                  cols="12"
+                >
+                  <v-card
+                    v-if="VisitedScore >= discount.cost"
+                    @click="OpenDiscount(discount)"
+                  >
                     <div class="d-flex flex-no-wrap justify-space-between">
                       <div>
-                        <v-card-title class="headline" v-text="discount.title"></v-card-title>
-                        <v-card-subtitle>{{discount.description}}</v-card-subtitle>
+                        <v-card-title
+                          class="headline"
+                          v-text="discount.title"
+                        ></v-card-title>
+                        <v-card-subtitle>{{
+                          discount.description
+                        }}</v-card-subtitle>
                       </div>
                       <v-avatar class="ma-3" size="125" tile>
-                        <h3>{{discount.cost}} pts</h3>
+                        <h3>{{ discount.cost }} pts</h3>
                       </v-avatar>
                     </div>
                   </v-card>
@@ -71,15 +87,33 @@
       <v-row justify="center">
         <v-dialog v-model="dialog2" persistent max-width="290">
           <v-card>
-            <v-card-title
-              class="headline"
-            >Are you sure you want spend {{ this.DiscountCost }} points?</v-card-title>
-            <v-card-text>You will not be able to refund this purchase.</v-card-text>
+            <v-card-title class="headline"
+              >Are you sure you want spend
+              {{ this.DiscountCost }} points?</v-card-title
+            >
+            <v-card-text
+              >You will not be able to refund this purchase.</v-card-text
+            >
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
-              <v-btn color="green darken-1" text @click="SpendPoints()">Agree</v-btn>
+              <v-btn color="green darken-1" text @click="dialog2 = false"
+                >Disagree</v-btn
+              >
+              <v-btn color="green darken-1" text @click="SpendPoints()"
+                >Agree</v-btn
+              >
             </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
+    <div id="app">
+      <v-row justify="center">
+        <v-dialog v-model="dialog3" max-width="290">
+          <v-card>
+            <v-row justify="center"
+              ><qriously value="Hello World!" :size="200"
+            /></v-row>
           </v-card>
         </v-dialog>
       </v-row>
@@ -87,12 +121,17 @@
   </div>
 </template>
 <script>
+// import VueQriously from "vue-qriously";
 export default {
+  // components: {
+  //   VueQriously
+  // },
   data: () => ({
     visited: null,
     Restaurants: [],
     dialog: false,
     dialog2: false,
+    dialog3: false,
     VisitedTitle: null,
     VisitedScore: null,
     interval: {},
@@ -239,6 +278,7 @@ export default {
               console.log(e);
             } finally {
               vm.dialog2 = false;
+              vm.dialog3 = true;
             }
           } else {
             console.log("error");
