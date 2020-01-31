@@ -294,7 +294,8 @@ export default {
                 await messageRef.set({
                   merchantId: vm.RestaurantID,
                   email: EMAIL,
-                  time: new Date().toLocaleString()
+                  time: new Date().toLocaleString(),
+                  couponId: id
                 });
               } catch (e) {
                 alert(e);
