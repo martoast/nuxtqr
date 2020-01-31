@@ -1,10 +1,7 @@
 <template>
   <div>
     <client-only>
-      <vue-qr-reader
-        v-on:code-scanned="codeArrived"
-        v-on:error-captured="errorCaptured"
-      />
+      <vue-qr-reader v-on:code-scanned="codeArrived" v-on:error-captured="errorCaptured" />
     </client-only>
   </div>
 </template>
@@ -58,25 +55,29 @@ export default {
       vm.$fireAuth.onAuthStateChanged(async function(user) {
         if (user) {
           try {
+            console.log("test");
+            console.log(payload);
             const messageRef = await vm.$fireStore
               .collection("codes")
 
-              .where("id", "==", payload)
+              .where("couponID", "==", payload)
               .get()
-              .then(function(querySnapshot) {
-                querySnapshot.forEach(function(doc) {
-                  let data = doc.data();
-
-                  console.log(data);
-                  alert("Coupon Valid");
-                });
+              .then(function(doc) {
+                if (doc.exists) {
+                  console.log("Document data:", doc.data());
+                  alert("Coupon Valid.");
+                } else {
+                  // doc.data() will be undefined in this case
+                  console.log("No such document!");
+                  alert("INVALID COUPON!!");
+                }
               })
               .catch(function(error) {
-                console.log("Error getting documents: ", error);
-                alert("Invalid Coupon!");
+                console.log("Error getting document:", error);
               });
           } catch (e) {
             alert(e);
+
             return;
           }
         } else {

@@ -14,10 +14,7 @@
               >
                 <div class="d-flex flex-no-wrap justify-space-between">
                   <div>
-                    <v-card-title
-                      class="headline"
-                      v-text="item.title"
-                    ></v-card-title>
+                    <v-card-title class="headline" v-text="item.title"></v-card-title>
                   </div>
 
                   <v-avatar class="ma-3" size="125" tile>
@@ -41,8 +38,7 @@
                 :width="15"
                 :value="value"
                 color="teal"
-                >{{ VisitedScore }}</v-progress-circular
-              >
+              >{{ VisitedScore }}</v-progress-circular>
             </div>
             <v-row justify="center">
               <v-card-title>
@@ -52,11 +48,7 @@
 
             <v-container v-if="Discounts.length > 0">
               <v-row dense>
-                <v-col
-                  v-for="(discount, i) in this.Discounts"
-                  :key="i"
-                  cols="12"
-                >
+                <v-col v-for="(discount, i) in this.Discounts" :key="i" cols="12">
                   <v-hover v-slot:default="{ hover }">
                     <v-card
                       v-if="VisitedScore >= discount.cost"
@@ -66,13 +58,12 @@
                     >
                       <div class="d-flex flex-no-wrap justify-space-between">
                         <div>
-                          <v-card-title
-                            class="headline"
-                            v-text="discount.title"
-                          ></v-card-title>
-                          <v-card-subtitle>{{
+                          <v-card-title class="headline" v-text="discount.title"></v-card-title>
+                          <v-card-subtitle>
+                            {{
                             discount.description
-                          }}</v-card-subtitle>
+                            }}
+                          </v-card-subtitle>
                         </div>
                         <v-avatar class="ma-3" size="125" tile>
                           <h3>{{ discount.cost }} pts</h3>
@@ -91,21 +82,15 @@
       <v-row justify="center">
         <v-dialog v-model="dialog2" persistent max-width="290">
           <v-card>
-            <v-card-title class="headline"
-              >Are you sure you want spend
-              {{ this.DiscountCost }} points?</v-card-title
-            >
-            <v-card-text
-              >You will not be able to refund this purchase.</v-card-text
-            >
+            <v-card-title class="headline">
+              Are you sure you want spend
+              {{ this.DiscountCost }} points?
+            </v-card-title>
+            <v-card-text>You will not be able to refund this purchase.</v-card-text>
             <v-card-actions>
               <v-spacer></v-spacer>
-              <v-btn color="green darken-1" text @click="dialog2 = false"
-                >Disagree</v-btn
-              >
-              <v-btn color="green darken-1" text @click="SpendPoints()"
-                >Agree</v-btn
-              >
+              <v-btn color="green darken-1" text @click="dialog2 = false">Disagree</v-btn>
+              <v-btn color="green darken-1" text @click="SpendPoints()">Agree</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -115,12 +100,10 @@
       <v-row justify="center">
         <v-dialog v-model="dialog3" max-width="290">
           <v-card>
-            <v-card-title
-              >Screen shot this code and present at the register.</v-card-title
-            >
-            <v-row justify="center"
-              ><qriously value="Hello World!" :size="200" background="white"
-            /></v-row>
+            <v-card-title>Screen shot this code and present at the register.</v-card-title>
+            <v-row justify="center">
+              <qriously :value="DiscountID" :size="200" background="white" />
+            </v-row>
           </v-card>
         </v-dialog>
       </v-row>
@@ -144,7 +127,8 @@ export default {
     DiscountCost: null,
     RestaurantID: null,
     MerchantEmail: null,
-    ID: []
+    ID: [],
+    DiscountID: null
   }),
   beforeDestroy() {
     clearInterval(this.interval);
@@ -288,14 +272,15 @@ export default {
               let id = Math.random()
                 .toString(36)
                 .substr(2, 9);
+              vm.DiscountID = id;
 
               const messageRef = vm.$fireStore.collection("codes").doc(id);
               try {
                 await messageRef.set({
-                  merchantId: vm.RestaurantID,
+                  merchantID: vm.RestaurantID,
                   email: EMAIL,
                   time: new Date().toLocaleString(),
-                  couponId: id
+                  couponID: id
                 });
               } catch (e) {
                 alert(e);
