@@ -4,14 +4,11 @@
       <v-app light>
         <v-content>
           <section>
-            <v-parallax height="400" src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg">
+            <v-parallax height="400" src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
               <v-row justify="center" align="center">
                 <v-col>
                   <v-layout column align-center justify-center class="white--text">
-                    <div class="white--text mb-2 display-1 text-center">
-                      Un Sistema Diseñado Para Los Restaurantes Mas Innovadores
-                      de México
-                    </div>
+                    <div class="white--text mb-2 display-1 text-center">Users</div>
                   </v-layout>
                 </v-col>
               </v-row>
@@ -25,7 +22,7 @@
             </v-parallax>
           </section>
           <section>
-            <v-parallax height="400" src="https://cdn.vuetifyjs.com/images/parallax/material2.jpg">
+            <v-parallax height="400" src="https://cdn.vuetifyjs.com/images/backgrounds/vbanner.jpg">
               <v-row justify="center" align="center">
                 <v-col>
                   <v-layout column align-center justify-center class="white--text">
