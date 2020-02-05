@@ -66,13 +66,21 @@ export default {
       this.$router.push("/readerPage");
     },
     async Logout() {
-      try {
-        await this.$fireAuth.signOut();
-        // signed out
-        alert("Signed Out");
-      } catch (e) {
-        // an error
-      }
+      const vm = this;
+
+      vm.$fireAuth.onAuthStateChanged(async function(user) {
+        if (user) {
+          try {
+            await this.$fireAuth.signOut();
+            // signed out
+            alert("Signed Out");
+          } catch (e) {
+            // an error
+          }
+        } else {
+          alert("must be signed in to perform this action.");
+        }
+      });
     }
   }
 };
