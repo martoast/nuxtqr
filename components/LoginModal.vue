@@ -33,6 +33,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="secondary" class="primary" @click="loginUser(email, password)">Login</v-btn>
+            <v-btn @click="googleSignIn" color="#4285F4">
+              <v-icon>fab fa-google</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -59,11 +62,25 @@ export default {
           alert(e);
         } finally {
           console.log("success");
-
         }
       } else {
         //make button different color green
       }
+    },
+    async googleSignIn() {
+      var provider = new this.$fireAuthObj.GoogleAuthProvider();
+
+      provider.addScope("https://www.googleapis.com/auth/plus.login");
+
+      this.$fireAuth
+        .signInWithPopup(provider)
+        .then(function(authData) {
+          console.log(authData);
+          this.$router.replace("/");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };
