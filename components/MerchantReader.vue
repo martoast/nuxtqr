@@ -66,6 +66,16 @@ export default {
             console.log(messageDoc.empty);
             if (messageDoc.empty != true) {
               alert("Coupon Valid.");
+              const messageRef = await vm.$fireStore
+                .collection("codes")
+                .doc(payload)
+                .delete()
+                .then(function() {
+                  console.log("Document successfully deleted!");
+                })
+                .catch(function(error) {
+                  console.error("Error removing document: ", error);
+                });
             } else {
               alert("Invalid Coupon!");
             }
