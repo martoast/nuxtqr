@@ -54,30 +54,23 @@ export default {
 
       vm.$fireAuth.onAuthStateChanged(async function(user) {
         if (user) {
-          try {
-            console.log("test");
-            console.log(payload);
-            const messageRef = await vm.$fireStore
-              .collection("codes")
+          console.log("test");
+          console.log(payload);
 
-              .where("couponID", "==", payload)
-              .get()
-              .then(async function(doc) {
-                if (doc.exists) {
-                  console.log("Document data:", doc.data());
-                  alert("Coupon Valid.");
-                  await doc.delete();
-                } else {
-                  // doc.data() will be undefined in this case
-                  console.log("No such document!");
-                  alert("INVALID COUPON!!");
-                }
-              })
-              .catch(function(error) {
-                console.log("Error getting document:", error);
-              });
+          const messageRef = await vm.$fireStore
+            .collection("codes")
+            .where("couponID", "==", payload);
+
+          try {
+            const messageDoc = await messageRef.get();
+            console.log(messageDoc.empty);
+            if (messageDoc.empty != true) {
+              alert("Coupon Valid.");
+            } else {
+              alert("Invalid Coupon!");
+            }
           } catch (e) {
-            alert(e);
+            alert("Invalid Coupon!");
 
             return;
           }
