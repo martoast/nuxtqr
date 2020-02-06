@@ -79,7 +79,7 @@ export default {
         .signInWithPopup(provider)
         .then(function(authData) {
           console.log(authData.user.email);
-          $nuxt._router.push("/dashboard");
+          $nuxt._router.push("/merchantdashboard");
         })
         .catch(function(error) {
           console.log(error);

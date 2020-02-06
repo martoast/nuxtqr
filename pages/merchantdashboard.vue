@@ -10,9 +10,7 @@
         <v-row justify="center" align="center">
           <DiscountCreateModal />
 
-          <v-btn class="secondary" @click="writeToFirestore()"
-            >Save Discounts</v-btn
-          >
+          <v-btn class="secondary" @click="writeToFirestore()">Save Changes</v-btn>
         </v-row>
       </v-card-actions>
     </v-card>
