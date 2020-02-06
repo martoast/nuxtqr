@@ -12,9 +12,7 @@
           </v-toolbar>
           <v-card-text>
             <v-row align="center" justify="space-around">
-              <v-icon @click="googleSignIn" large>mdi-google</v-icon>
-              <v-icon large>mdi-facebook</v-icon>
-              <v-icon large>mdi-twitter</v-icon>
+              <v-icon @click="googleSignIn" large color="blue">mdi-google</v-icon>
             </v-row>
             <v-form>
               <v-text-field
@@ -38,6 +36,9 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="secondary" class="primary" @click="loginUser(email, password)">Login</v-btn>
+            <v-btn @click="googleSignIn" color="#4285F4">
+              <v-icon>mdi-gmail</v-icon>
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
