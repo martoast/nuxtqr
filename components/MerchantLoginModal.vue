@@ -1,22 +1,21 @@
 <template>
   <div>
     <v-row justify="center">
-      <v-dialog
-        v-model="dialog"
-        max-width="450px"
-      >
+      <v-dialog v-model="dialog" max-width="450px">
         <template v-slot:activator="{ on }">
           <v-btn v-on="on">Log in</v-btn>
         </template>
 
         <v-card class="elevation-12">
-          <v-toolbar
-            color="secondary"
-            dark
-          >
+          <v-toolbar color="secondary" dark>
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
+            <v-row align="center" justify="space-around">
+              <v-icon @click="googleSignIn" large>mdi-google</v-icon>
+              <v-icon large>mdi-facebook</v-icon>
+              <v-icon large>mdi-twitter</v-icon>
+            </v-row>
             <v-form>
               <v-text-field
                 label="Email"
@@ -38,11 +37,7 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="secondary"
-              class="primary"
-              @click="loginUser(email, password)"
-            >Login</v-btn>
+            <v-btn color="secondary" class="primary" @click="loginUser(email, password)">Login</v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -73,6 +68,21 @@ export default {
       } else {
         //make button different color green
       }
+    },
+    async googleSignIn() {
+      var provider = new this.$fireAuthObj.GoogleAuthProvider();
+
+      provider.addScope("https://www.googleapis.com/auth/plus.login");
+
+      this.$fireAuth
+        .signInWithPopup(provider)
+        .then(function(authData) {
+          console.log(authData.user.email);
+          $nuxt._router.push("/dashboard");
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
     }
   }
 };

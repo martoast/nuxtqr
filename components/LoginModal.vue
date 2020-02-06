@@ -10,6 +10,11 @@
           <v-toolbar color="secondary" dark>
             <v-toolbar-title>Login</v-toolbar-title>
           </v-toolbar>
+          <v-row align="center" justify="space-around">
+            <v-icon @click="googleSignIn" large>mdi-google</v-icon>
+            <v-icon large>mdi-facebook</v-icon>
+            <v-icon large>mdi-twitter</v-icon>
+          </v-row>
           <v-card-text>
             <v-form>
               <v-text-field
@@ -34,7 +39,7 @@
             <v-spacer></v-spacer>
             <v-btn color="secondary" class="primary" @click="loginUser(email, password)">Login</v-btn>
             <v-btn @click="googleSignIn" color="#4285F4">
-              <v-icon>fab fa-google</v-icon>
+              <v-icon>mdi-gmail</v-icon>
             </v-btn>
           </v-card-actions>
         </v-card>
@@ -75,8 +80,8 @@ export default {
       this.$fireAuth
         .signInWithPopup(provider)
         .then(function(authData) {
-          console.log(authData);
-          this.$router.replace("/");
+          console.log(authData.user.email);
+          $nuxt._router.push("/dashboard");
         })
         .catch(function(error) {
           console.log(error);
