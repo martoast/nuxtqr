@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "firebase": "^7.7.0",
-    "nuxt": "^2.0.0",
+    "nuxt": "^2.15.8",
     "nuxt-fire": "^3.5.5",
     "vue-no-ssr": "^1.1.1",
     "vue-qr-reader": "^1.6.2",
